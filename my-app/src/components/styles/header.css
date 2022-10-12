@@ -1,0 +1,32 @@
+.nav_menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+}
+
+.nav_item {
+    align-content: center;
+    width: 75px;
+    height: 20px;
+    border-radius: 5px;
+    font-size: 12px;
+    text-align: center;
+    margin-right: 40px;
+    list-style: none;
+}
+
+.nav_item:hover {
+    background-color: lightgray;
+}
+
+.logo {
+    height: 40px;
+}
