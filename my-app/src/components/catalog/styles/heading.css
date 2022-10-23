@@ -1,0 +1,17 @@
+.heading {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    list-style: none;
+}
+
+.book{
+    width: 500px;
+}
+
+.right_bar {
+    margin-left: 75px;
+}
+.paragraph {
+    width: 480px;
+}
