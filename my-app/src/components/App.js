@@ -1,16 +1,14 @@
-
-import Header from './components/Header';
-import Heading from './components/Heading';
-import Main from './components/Main';
+import Header from './Header';
+import Heading from './Heading';
+import Main from './Main';
 import './App.css';
-import Footer from './components/Footer';
+import Footer from './Footer';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Link
 } from "react-router-dom";
-
 
 function App() {
   return (
