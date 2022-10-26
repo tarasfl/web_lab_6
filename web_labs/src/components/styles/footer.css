@@ -1,0 +1,13 @@
+footer{
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-top:1.5px solid black ;
+    bottom: 0;
+}
+
+.icon {
+    height: 32px;
+    margin-left: 5px    ;
+}

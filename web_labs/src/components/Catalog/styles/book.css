@@ -1,0 +1,10 @@
+.item {
+    width: 150px;
+    height: 330px;
+    display: flex;
+    flex-direction: column;
+}
+
+.img {
+   height: 100px;
+}

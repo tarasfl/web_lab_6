@@ -1,0 +1,16 @@
+\.item {
+    width: 150px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+}
+
+.img {
+   height: 100px;
+}
+.items {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    list-style: none;
+}

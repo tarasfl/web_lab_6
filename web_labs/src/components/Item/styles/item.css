@@ -1,0 +1,47 @@
+.book_content{
+    display: flex;
+    justify-content: space-evenly;
+}
+.item-img{
+    height: 280px;
+}
+
+.item-right_bar{
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+}
+
+.item-chars{
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+}
+
+.item-price{
+    margin-right: 10px;
+    background-color: lightgray;
+    border-radius: 5px;
+    width: 125px;
+}
+
+.item-pages{
+    background-color: lavender;
+    border-radius: 5px;
+    width: 125px;
+}
+
+.item-lower{
+    margin-top: 100px;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.item-buttons{
+    display: flex;
+    flex-flow: row;
+}
+
+.go_back {
+    margin-right: 15px;
+}
