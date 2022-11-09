@@ -1,9 +1,11 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Select from 'react-select';
 import './styles/dropdown.css';
 import Button from "@mui/material/Button";
 import Book from './Book';
-import { books_list } from './data/books_data';
+import Spinner from './Spinner';
+import { books_list} from './data/books_data';
+import { get_books, apply_filters, search_item} from '../../api/parse';
 
 const filters_list = {
     filter_1: [],
@@ -18,7 +20,7 @@ const filters_list = {
         [
             { value: '0-100 pages', label: '0-100 pages' },
             { value: '100-500 pages', label: '100-500 pages'},
-            { value: '500-and more pages', label: '500-and more pages' },
+            { value: '500-and more pages', label: '500-more pages' },
         ]
 };
 
@@ -32,10 +34,51 @@ const build_filters = () => {
     return filters_list
 }
 
-const Dropdown = ({state, setState}) => {
-    const [booksState, setBooksState] = useState(books_list)
-    const filters_list = build_filters()
+const Dropdown = () => {
 
+    const [booksState, setBooksState] = useState() 
+    const [authorFilter, setAuthorFilter] = useState('None')
+    const [priceFilter, setPriceFilter] = useState('None')
+    const [pageFilter, setPageFilter] = useState('None')
+    const [loadState, setLoadState] = useState(true)
+    const [searchField, setSearchField] = useState('None')
+
+
+    async function load_items() {
+        setBooksState(await get_books());
+        setBooksState((booksState) => booksState.result)
+        setLoadState((loadState) => loadState = false)
+    }
+    async function filter(){
+        setBooksState(await apply_filters(authorFilter, priceFilter, pageFilter));
+        setBooksState((booksState) => booksState.result)
+        setLoadState((loadState) => loadState = false)
+    }
+
+    async function search_book(){
+        setBooksState(await  search_item(searchField));
+        setBooksState((booksState) => booksState.result)
+        setLoadState((loadState) => loadState = false)
+    }
+    useEffect(() =>{ 
+        setLoadState(true)
+        if(authorFilter == 'None' && priceFilter == 'None' && pageFilter  == 'None' && searchField == 'None'){
+            load_items()
+        }else{
+            filter()
+        }
+    
+    }
+    , [authorFilter, pageFilter, priceFilter])
+
+    useEffect(() =>{
+        if(searchField != 'None'){
+            search_book()
+        }
+    }, [searchField])
+    
+    const filters_list = build_filters()
+    if(loadState){return <Spinner/>}
     return(
         <span>
         <div className='container'>
@@ -48,25 +91,17 @@ const Dropdown = ({state, setState}) => {
                 let filter_2 = document.querySelector('#filter_2 > div > div.css-319lph-ValueContainer > div.css-qc6sy-singleValue');
                 let filter_3 = document.querySelector('#filter_3 > div > div.css-319lph-ValueContainer > div.css-qc6sy-singleValue');
                 if(filter_1 != null){
-                    setBooksState((booksState) => booksState.filter((book) => book.author == filter_1.innerHTML))
+                    let author = filter_1.innerHTML
+                    setAuthorFilter((authorFilter) => authorFilter = author)
                 };
-                if(filter_2 != null){
-                    const [min_price, max_price] = filter_2.innerHTML.split(' ')[0].split('-')
-                    if(isNaN(max_price)){
-                        setBooksState((booksState) => booksState.filter((book) => book.price > min_price))
-                    }else{
-                        setBooksState((booksState) => booksState.filter((book) => book.price > min_price && book.price < max_price))
-                    }
+                if(filter_2 != null){   
+                    let price = filter_2.innerHTML
+                    setPriceFilter((priceFilter) => priceFilter = price)
                 };
                 if(filter_3 != null){
-                    const [min_pages, max_pages] = filter_3.innerHTML.split(' ')[0].split('-')
-                    if(isNaN(max_pages)){
-                        setBooksState((booksState) => booksState.filter((book) => book.pages > min_pages))
-                    }else{
-                        setBooksState((booksState) => booksState.filter((book) => book.pages > min_pages && book.pages < max_pages))
-                    }
+                    let pages = filter_3.innerHTML
+                    setPageFilter((pageFilter) => pageFilter=pages)
                 };
-               
             }
             }>Apply</Button>
         </form>
@@ -75,7 +110,8 @@ const Dropdown = ({state, setState}) => {
             <Button variant="outlined" size="small" onClick={() =>
                 {
                     const search_input = document.getElementById("search_input")
-                    setBooksState((booksState) =>booksState.filter(booksState => booksState.author.search(search_input.value) !== -1) )
+                    const search_value = search_input.value
+                    setSearchField((searchField) => searchField = search_value)
                 }
             }>search</Button>
         </form>

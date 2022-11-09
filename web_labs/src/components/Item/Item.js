@@ -1,16 +1,16 @@
-import React from 'react';
+import React, {useContext } from 'react';
 import item from './imgs/item.jpg'; 
 import './styles/item.css';
 import Button from "@mui/material/Button";
 import {useParams } from "react-router-dom";
-import {books_list} from '../Catalog/data/books_data';
+import {BooksContex} from '../Catalog/data/books_data';
 
 
 function Item() {
-
+    const [booksState, setBooksState] = useContext(BooksContex)
     const  {id} = useParams();
     const[author, pages] = id.split('_')
-    const books = books_list.filter((book) => book.author == author && book.pages == pages)
+    const books = booksState.books.filter((book) => book.author == author && book.pages == pages)
     const book = books[0]
     return (
     <section>

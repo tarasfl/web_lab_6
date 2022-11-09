@@ -1,3 +1,7 @@
+import React, {useState} from "react"
+
+
+
 export const books_list = [
     {
         author: 'Mark',
@@ -38,3 +42,9 @@ export const books_list = [
     },
 
 ]
+
+
+
+const BooksContex = React.createContext([{books: books_list}])
+  
+export {BooksContex}
